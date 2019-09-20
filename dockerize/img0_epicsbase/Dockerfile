@@ -1,0 +1,17 @@
+FROM  continuumio/miniconda3:latest
+LABEL version="0.0.1" \
+      maintainer="kedokudo <chenzhang8722@gmail.com>" \
+      lastupdate="2019-09-19"
+USER  root
+WORKDIR /home
+EXPOSE 8888
+
+# Install necessary libraries from offical repo
+RUN apt update  -y && apt upgrade -y && \
+    apt install -y  build-essential libreadline-dev
+
+# Get the latest version of EPICS
+RUN wget https://github.com/epics-base/epics-base/archive/R7.0.3.tar.gz
+RUN tar xzf R7.0.3.tar.gz 
+WORKDIR /home/epics-base-R7.0.3/ 
+RUN make -j4 CFLAGS="-fPIC" CXXFLAGS="-fPIC"
