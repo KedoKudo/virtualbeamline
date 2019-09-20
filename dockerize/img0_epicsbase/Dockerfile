@@ -19,3 +19,4 @@ RUN rm  R7.0.3.tar.gz
 RUN ln -s epics-base-R7.0.3 epics
 WORKDIR /opt/epics
 RUN make -j4 CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+WORKDIR /home
