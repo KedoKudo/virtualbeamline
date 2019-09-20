@@ -1,7 +1,7 @@
 FROM  continuumio/miniconda3:latest
 LABEL version="0.0.1" \
       maintainer="kedokudo <chenzhang8722@gmail.com>" \
-      lastupdate="2019-09-19"
+      lastupdate="2019-09-20"
 USER  root
 WORKDIR /home
 
