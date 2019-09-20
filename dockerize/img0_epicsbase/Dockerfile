@@ -4,7 +4,6 @@ LABEL version="0.0.1" \
       lastupdate="2019-09-19"
 USER  root
 WORKDIR /home
-EXPOSE 8888
 
 # Install necessary libraries from offical repo
 RUN apt update  -y && apt upgrade -y && \
