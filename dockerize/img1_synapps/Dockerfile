@@ -9,7 +9,7 @@ USER  root
 # * need the x11 support
 # * need the libusb (newer faster usb support)
 RUN apt update  -y && apt upgrade -y && \
-    apt install -y  re2c libx11-dev xorg-dev libusb-dev libusb-1.0-0-dev
+    apt install -y  re2c libx11-dev xorg-dev libusb-dev libusb-1.0-0-dev screen xvfb x11-xserver-utils
 
 ADD     assemble_synApps.sh /opt/epics
 WORKDIR /opt/epics
