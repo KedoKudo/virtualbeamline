@@ -1,5 +1,5 @@
 # Use the EPICS base image
-FROM kedokudo/virtualbeamline:synapps
+FROM kedokudo/virtualbeamline:synapp
 LABEL version="0.0.1" \
       maintainer="kedokudo <chenzhang8722@gmail.com>" \
       lastupdate="2019-09-20"
