@@ -11,13 +11,13 @@ RUN apt update  -y && \
     apt install -y  build-essential libreadline-dev wget
 
 # Get the latest version of EPICS
-#ENV EPICS_ROOT="/opt/epics-base"
-#ENV EPICS_HOST_ARCH=linux-x86_64
-#ENV PATH="${PATH}:${EPICS_ROOT}/bin/${EPICS_HOST_ARCH}"
+ENV EPICS_ROOT="/opt/epics-base"
+ENV EPICS_HOST_ARCH=linux-x86_64
+ENV PATH="${PATH}:${EPICS_ROOT}/bin/${EPICS_HOST_ARCH}"
 
-RUN echo EPICS_HOST_ARCH=${EPICS_HOST_ARCH}
-RUN echo EPICS_ROOT=${EPICS_ROOT}
-RUN echo PATH=${PATH}
+#RUN echo EPICS_HOST_ARCH=${EPICS_HOST_ARCH}
+#RUN echo EPICS_ROOT=${EPICS_ROOT}
+#RUN echo PATH=${PATH}
 
 WORKDIR ${EPICS_ROOT}/..
 RUN wget https://epics.anl.gov/download/base/base-7.0.3.tar.gz
