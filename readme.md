@@ -30,4 +30,10 @@ __Virtual Beamline for BlueSky Control System Testing__
     `ctrl+p ctrl+q`  
     to safely detatch from the container without stopping it.
 
+* Accessing PVs on the network by first starting a new container with  
+    `docker run -it --rm --net=virtualbeam virtualbeamline:base /bin/bash`  
+    then issue the following cmd in the shell of this container for testing  
+    `caget 13SIM1:cam1:AcquirePeriod`  
+    which should returns a proper epics signal value.
+
 > TODO: use Docker swarm/composor to setup the virtual beamline
