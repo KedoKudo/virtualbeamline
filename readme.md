@@ -19,10 +19,10 @@ __Virtual Beamline for BlueSky Control System Testing__
     * All devices need to be run with --net=virtualbeam
 * Start the caRepeater on the network
 
-    `docker run -d --entrypoint="caRepeater" --net=virtualbeam kedokudo/virtualbeamline:simdet`
+    `docker run -d --rm --entrypoint="caRepeater" --name="caRepeater" --net=virtualbeam kedokudo/virtualbeamline:base`
 
-* Start the remaing devices
-    `docker run -d --net=virtualbeam kedokudo/virtualbeamline:simdet`
+* Start the remaing devices  
+    `docker run -d --rm --net=virtualbeam --name="simDet" kedokudo/virtualbeamline:simdet`
 
     * This will start the sim detector session in the background, to reconnect to it, issue  
     `docker attach $CONTAINER_ID$`  
