@@ -22,12 +22,12 @@ __Virtual Beamline for BlueSky Control System Testing__
     `docker run -d --rm --entrypoint="caRepeater" --name="caRepeater" --net=virtualbeam kedokudo/virtualbeamline:base`
 
 * Start the remaing devices  
-    `docker run -d --rm --net=virtualbeam --name="simDet" kedokudo/virtualbeamline:simdet`
+    `docker run -dit --rm --net=virtualbeam --name="simDet" --entrypoint="simDetectorApp st.cmd" kedokudo/virtualbeamline:simdet /bin/bash` 
 
     * This will start the sim detector session in the background, to reconnect to it, issue  
-    `docker attach $CONTAINER_ID$`  
+    `docker attach simDet`  
     and use  
     `ctrl+p ctrl+q`  
     to safely detatch from the container without stopping it.
 
-> TODO: use Docker swarm to setup the virtual beamline
+> TODO: use Docker swarm/composor to setup the virtual beamline
