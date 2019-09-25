@@ -1,0 +1,65 @@
+Sending build context to Docker daemon  3.072kB
+Step 1/21 : FROM  ubuntu:latest
+ ---> 2ca708c1c9cc
+Step 2/21 : LABEL version="0.0.1"       maintainer="kedokudo <chenzhang8722@gmail.com>"       lastupdate="2019-09-20"
+ ---> Using cache
+ ---> 01efd845545a
+Step 3/21 : USER  root
+ ---> Using cache
+ ---> a4e2696e5296
+Step 4/21 : WORKDIR /home
+ ---> Using cache
+ ---> 31eec121b55e
+Step 5/21 : RUN apt update  -y &&     apt upgrade -y &&     apt install -y  build-essential libreadline-dev wget
+ ---> Using cache
+ ---> cf430cf01ec4
+Step 6/21 : ENV EPICS_ROOT="/opt/epics-base"
+ ---> Using cache
+ ---> 27c894ad86de
+Step 7/21 : ENV EPICS_HOST_ARCH=linux-x86_64
+ ---> Using cache
+ ---> 3b1d57209af5
+Step 8/21 : ENV PATH="${PATH}:${EPICS_ROOT}/bin/${EPICS_HOST_ARCH}"
+ ---> Using cache
+ ---> 058e56056863
+Step 9/21 : RUN echo EPICS_HOST_ARCH=${EPICS_HOST_ARCH}
+ ---> Using cache
+ ---> 60d8682e9185
+Step 10/21 : RUN echo EPICS_ROOT=${EPICS_ROOT}
+ ---> Using cache
+ ---> b2ae74d1070d
+Step 11/21 : RUN echo PATH=${PATH}
+ ---> Using cache
+ ---> 7958edce491c
+Step 12/21 : WORKDIR ${EPICS_ROOT}/..
+ ---> Using cache
+ ---> afa555962c45
+Step 13/21 : RUN wget https://epics.anl.gov/download/base/base-7.0.3.tar.gz
+ ---> Using cache
+ ---> 86aa4f05832c
+Step 14/21 : RUN ls -lAFg base-7.0.3.tar.gz
+ ---> Using cache
+ ---> 2dbaacd1c77d
+Step 15/21 : RUN tar xzf base-7.0.3.tar.gz
+ ---> Using cache
+ ---> ecd0b4f5dcac
+Step 16/21 : RUN rm  base-7.0.3.tar.gz
+ ---> Using cache
+ ---> d9d71ac64ae7
+Step 17/21 : RUN ln -s base-7.0.3 epics-base
+ ---> Using cache
+ ---> dd378ae3b82e
+Step 18/21 : WORKDIR ${EPICS_ROOT}/.
+ ---> Using cache
+ ---> b5e2a4a6bad6
+Step 19/21 : RUN pwd
+ ---> Using cache
+ ---> 3e9766b82d54
+Step 20/21 : RUN ls -lAFg
+ ---> Using cache
+ ---> ec41d1a95286
+Step 21/21 : RUN make -j4 CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+ ---> Using cache
+ ---> 456ea7e45bb1
+Successfully built 456ea7e45bb1
+Successfully tagged epics-base-7.0.3:latest
