@@ -23,7 +23,7 @@ __Virtual Beamline for BlueSky Control System Testing__
 
 * Start the remaing devices
     * Start the simulated scalers and motors  
-    `docker run -dit --rm -e IOC_PREFIX='6iddsim:' -e IOCNAME='6iddsim'  --net=virtualbeam --name="ioc6iddsimmtr" kedokudo/virtualbeamline:ioc6iddsimmtr /bin/bash`
+    `docker run -dit --rm -e IOC_PREFIX='6iddSIM:' -e IOCNAME='6iddSIM'  --net=virtualbeam --name="ioc6iddsimmtr" kedokudo/virtualbeamline:ioc6iddsimmtr /bin/bash`
 
     * Start the simulated detector for 6-ID-D
 
