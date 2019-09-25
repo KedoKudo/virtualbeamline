@@ -34,6 +34,7 @@ WORKDIR /opt/epics/synApps/support/xxx-R6-1
 RUN     make rebuild
 
 WORKDIR /opt/epics-base-R7.0.3/synApps/support/xxx-R6-1/iocBoot/iocxxx/softioc
+ENTRYPOINT [ "./run"]
 
 # --- DEV ---
 # docker build -t kedokudo/virtualbeamline:ioc6iddsimmtr .    
