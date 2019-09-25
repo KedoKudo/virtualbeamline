@@ -25,7 +25,7 @@ RUN wget https://epics.anl.gov/download/base/base-7.0.3.tar.gz
 RUN tar xzf base-7.0.3.tar.gz
 RUN rm  base-7.0.3.tar.gz
 RUN ln -s base-7.0.3 epics-base
-WORKDIR ${EPICS_ROOT}/.
+WORKDIR ${EPICS_ROOT}
 #RUN pwd
 #RUN ls -lAFg
 RUN make -j4 CFLAGS="-fPIC" CXXFLAGS="-fPIC"
