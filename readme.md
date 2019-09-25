@@ -21,7 +21,12 @@ __Virtual Beamline for BlueSky Control System Testing__
 
     `docker run -d --rm --entrypoint="caRepeater" --name="caRepeater" --net=virtualbeam kedokudo/virtualbeamline:base`
 
-* Start the remaing devices  
+* Start the remaing devices
+    * Start the simulated scalers and motors  
+    `docker run -dit --rm -e IOC_PREFIX='6iddsim:' -e IOCNAME='6iddsim'  --net=virtualbeam --name="ioc6iddsimmtr" kedokudo/virtualbeamline:ioc6iddsimmtr /bin/bash`
+
+    * Start the simulated detector for 6-ID-D
+
     `docker run -dit --rm --net=virtualbeam --name="simDet"  kedokudo/virtualbeamline:simdet /bin/bash` 
 
     * This will start the sim detector session in the background, to reconnect to it, issue  
@@ -31,7 +36,7 @@ __Virtual Beamline for BlueSky Control System Testing__
     to safely detatch from the container without stopping it.
 
 * Accessing PVs on the network by first starting a new container with  
-    `docker run -it --rm --net=virtualbeam virtualbeamline:base /bin/bash`  
+    `docker run -it --rm --net=virtualbeam kedokudo/virtualbeamline:base /bin/bash`  
     then issue the following cmd in the shell of this container for testing  
     `caget 13SIM1:cam1:AcquirePeriod`  
     which should returns a proper epics signal value.
