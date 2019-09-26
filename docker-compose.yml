@@ -1,0 +1,61 @@
+# Docker composor for the default virtual 6IDD testing ENV
+version: '3.7'
+
+services:
+  caRepeat:
+    image: kedokudo/virtualbeamline:epics-base
+    networks:
+      - vbnet6idd
+    entrypoint:
+      - bin/linux-x86_64/caRepeater
+    environment:
+      - --name="caRepeater"
+  
+  ioc6iddsimmtr:
+    image: kedokudo/virtualbeamline:ioc6iddsimmtr
+    stdin_open: true
+    tty: true
+    networks:
+      - vbnet6idd
+    environment:
+      - IOC_PREFIX='6iddSIM:'
+      - IOCNAME='6iddSIM'
+    expose:
+      - "5064" 
+      - "5065"
+    depends_on:
+      - caRepeat
+  
+  ioc6iddsimdet:
+    image: kedokudo/virtualbeamline:ioc6iddsimdet
+    stdin_open: true
+    tty: true
+    networks:
+      - vbnet6idd
+    environment:
+      - IOC_PREFIX='6iddSIMDET1:'
+      - --name='ioc6iddsimdet' 
+    expose:
+      - "5064" 
+      - "5065"
+    depends_on:
+      - caRepeat
+  
+  console:
+    image: kedokudo/virtualbeamline:epics-base
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - /bin/bash
+    networks:
+      - vbnet6idd
+    environment:
+      - --name="console"
+    depends_on:
+      - caRepeat
+      - ioc6iddsimdet
+      - ioc6iddsimmtr
+
+networks:
+  vbnet6idd:
+    driver: bridge
