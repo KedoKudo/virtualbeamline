@@ -4,7 +4,7 @@ LABEL version="0.0.1" \
       maintainer="kedokudo <chenzhang8722@gmail.com>" \
       lastupdate="2019-09-20"
 USER  root
-ENV   EPICS="/opt/epics-base-R7.0.3"
+ENV   EPICS="/opt/epics-base"
 ENV   SYNAPPS="${EPICS}/synApps/support"
 ENV   SIMDET_BIN="${EPICS}/synApps/support/areaDetector-R3-7/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64"
 ENV   PATH="${SIMDET_BIN}:${PATH}"
@@ -17,7 +17,7 @@ RUN apt update  -y && apt upgrade -y && \
     && rm -rf /var/lib/apt/lists/*
 
 # make the sim motor binary
-WORKDIR /opt/epics/synApps/support/xxx-R6-1/iocBoot/iocxxx/
+WORKDIR /opt/epics-base/synApps/support/xxx-R6-1/iocBoot/iocxxx/
 RUN     sed -i s/xxx:/'$(IOC_PREFIX)'/g common.iocsh
 RUN     cp examples/motors.iocsh ./
 RUN     cp examples/std.iocsh    ./
@@ -30,10 +30,10 @@ RUN     sed -i sz'IOC=xxx'z'IOC=$(IOCNAME)'zg st.cmd.Linux
 RUN     sed -i sz'< common.iocsh'z'< common.iocsh\n< std.iocsh\n< motors.iocsh'zg st.cmd.Linux
 
 # build the sim scalers and motors
-WORKDIR /opt/epics/synApps/support/xxx-R6-1
+WORKDIR /opt/epics-base/synApps/support/xxx-R6-1
 RUN     make rebuild
 
-WORKDIR /opt/epics-base-R7.0.3/synApps/support/xxx-R6-1/iocBoot/iocxxx/softioc
+WORKDIR /opt/epics-base/synApps/support/xxx-R6-1/iocBoot/iocxxx/softioc
 ENTRYPOINT [ "./run"]
 
 # --- DEV ---
