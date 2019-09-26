@@ -3,15 +3,15 @@ version: '3.7'
 
 services:
   caRepeat:
+    container_name: caRepeater
     image: kedokudo/virtualbeamline:epics-base
     networks:
       - vbnet6idd
     entrypoint:
       - bin/linux-x86_64/caRepeater
-    environment:
-      - --name="caRepeater"
   
   ioc6iddsimmtr:
+    container_name: ioc6iddsimmtr
     image: kedokudo/virtualbeamline:ioc6iddsimmtr
     stdin_open: true
     tty: true
@@ -27,6 +27,7 @@ services:
       - caRepeat
   
   ioc6iddsimdet:
+    container_name: ioc6iddsimdet
     image: kedokudo/virtualbeamline:ioc6iddsimdet
     stdin_open: true
     tty: true
@@ -34,7 +35,6 @@ services:
       - vbnet6idd
     environment:
       - IOC_PREFIX='6iddSIMDET1:'
-      - --name='ioc6iddsimdet' 
     expose:
       - "5064" 
       - "5065"
@@ -42,6 +42,7 @@ services:
       - caRepeat
   
   console:
+    container_name: console
     image: kedokudo/virtualbeamline:epics-base
     stdin_open: true
     tty: true
@@ -49,12 +50,28 @@ services:
       - /bin/bash
     networks:
       - vbnet6idd
-    environment:
-      - --name="console"
     depends_on:
       - caRepeat
       - ioc6iddsimdet
       - ioc6iddsimmtr
+  
+  mongo:
+    container_name: mongoDB
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  frontend:
+    container_name: jupyterlab
+    image: kedokudo/virtualbeamline:jupyter
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - "jupyter"
+      - "lab"
+      - "--ip=0.0.0.0"
+      - "--no-browser"
+      - "--allow-root"
 
 networks:
   vbnet6idd:
