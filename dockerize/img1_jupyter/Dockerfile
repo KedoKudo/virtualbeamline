@@ -60,7 +60,7 @@ RUN pip install apstools
 
 # entry point
 WORKDIR    /home
-ENTRYPOINT ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
+ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
 
 # --- DEV ---
 # docker build -t kedokudo/virtualbeamline:jupyter .
