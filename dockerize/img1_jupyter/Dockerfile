@@ -32,10 +32,11 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
 RUN conda update --all --quiet --yes
 
 RUN conda install --quiet --yes \
+    'nodejs' \
     'jupyter' 'jupyterlab' \
     'numpy' 'scipy' 'matplotlib' \
     && \
-    conda clean --all -f -y && \
+    conda clean --all --yes && \
     # Activate ipywidgets extension in the environment that runs the notebook server
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
     # Also activate ipywidgets extension for JupyterLab
@@ -56,6 +57,10 @@ RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot"
 RUN pip install git+https://github.com/NSLS-II/bluesky#egg=bluesky
 RUN pip install apstools
 
+
+# entry point
+WORKDIR    /home
+ENTRYPOINT ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
 
 # --- DEV ---
 # docker build -t kedokudo/virtualbeamline:jupyter .
