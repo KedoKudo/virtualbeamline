@@ -1,7 +1,7 @@
 FROM  ubuntu:latest
 LABEL version="0.0.1" \
       maintainer="kedokudo <chenzhang8722@gmail.com>" \
-      lastupdate="2019-09-20"
+      lastupdate="2019-09-25"
 USER  root
 WORKDIR /home
 
@@ -30,5 +30,6 @@ WORKDIR ${EPICS_ROOT}
 #RUN ls -lAFg
 RUN make -j4 CFLAGS="-fPIC" CXXFLAGS="-fPIC"
 
+# 
 # build: docker build -t epics-base-7.0.3 ./ 2>&1 | tee build-log.txt
 # run: docker run -it --rm --net=virtualbeam epics-base-7.0.3 /bin/bash
