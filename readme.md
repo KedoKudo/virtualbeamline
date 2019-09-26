@@ -51,4 +51,5 @@ which should start up all the virtual devices in a bridge network.  To power dow
 
 which will stop all containers (virtual devices), then the entire virtual network.
 
-> Technically, you can use `-f $DOCKER_COMPOSE_FILE` if you want to start the virtual beamline at other location.
+> * Technically, you can use `-f $DOCKER_COMPOSE_FILE` if you want to start the virtual beamline at other location.  
+> * A console is provided to inspec all virtual devices using epics cmd.  To attach to it, use `docker attach $console_ID` to start the shell.
