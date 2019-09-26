@@ -9,7 +9,7 @@ __Virtual Beamline for BlueSky Control System Testing__
 * Each individual sim device is a container.
 
 
-## Start the virtual beamline
+## Step-by-step Build the Virtual Beamline
 * Create a network for all virtual devices using
 
     `docker network create --driver bridge virtualbeam`
@@ -35,4 +35,20 @@ __Virtual Beamline for BlueSky Control System Testing__
     `docker run -it --rm --net=virtualbeam kedokudo/virtualbeamline:base /bin/bash`  
 
 
-> TODO: use Docker swarm/composor to setup the virtual beamline
+## One-stop-shop
+
+Go to the root of the repo where you can find the file `docker-compose.yml`, then issue the follwoing command
+
+```bash
+>> docker-compose up -d
+```
+
+which should start up all the virtual devices in a bridge network.  To power down the entire virtual beamline, go to the same folder as above and issue
+
+```bash
+>> docker-compose down
+```
+
+which will stop all containers (virtual devices), then the entire virtual network.
+
+> Technically, you can use `-f $DOCKER_COMPOSE_FILE` if you want to start the virtual beamline at other location.
