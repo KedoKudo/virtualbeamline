@@ -19,7 +19,7 @@ __Virtual Beamline for BlueSky Control System Testing__
     * All devices need to be run with --net=virtualbeam
 * Start the caRepeater on the network
 
-    `docker run -d --rm --entrypoint="caRepeater" --name="caRepeater" --net=virtualbeam kedokudo/virtualbeamline:base`
+    `docker run -d --rm --entrypoint="bin/linux-x86_64/caRepeater" --name="caRepeater" --net=virtualbeam kedokudo/virtualbeamline:epicbase`
 
 * Start the remaing devices
     * Start the simulated scalers and motors  
