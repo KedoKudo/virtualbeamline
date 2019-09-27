@@ -6,7 +6,7 @@ USER  root
 ENV   EPICS="/opt/epics-base"
 ENV   EPICS_BASE="/opt/epics-base"
 ENV   EPICSEXTENSIONS="${EPICS_BASE}/extensions"
-ENV   SIMDET_BIN="${EPICS}/synApps/support/areaDetector-R3-7/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64"
+ENV   SIMDET_BIN="/opt/synApps/support/areaDetector-R3-7/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64"
 ENV   PATH="${SIMDET_BIN}:${PATH}"
 
 RUN apt update  -y && apt upgrade -y && \
@@ -22,7 +22,8 @@ RUN     unzip master.zip \
     &&  mv medm-master ${EPICSEXTENSIONS}/src \
     &&  mv ${EPICSEXTENSIONS}/src/medm-master ${EPICSEXTENSIONS}/src/medm
 WORKDIR ${EPICS_BASE}
-
+RUN make 
+RUN make clean
 
 # --- DEV --- 
 # docker build -t kedokudo/virtualbeamline:medm .
