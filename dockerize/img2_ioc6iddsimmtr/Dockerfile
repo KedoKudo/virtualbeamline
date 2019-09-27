@@ -5,8 +5,8 @@ LABEL version="0.0.1" \
       lastupdate="2019-09-20"
 USER  root
 ENV   EPICS="/opt/epics-base"
-ENV   SYNAPPS="${EPICS}/synApps/support"
-ENV   SIMDET_BIN="${EPICS}/synApps/support/areaDetector-R3-7/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64"
+ENV   SYNAPPS="/opt/synApps/support"
+ENV   SIMDET_BIN="/opt/synApps/support/areaDetector-R3-7/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64"
 ENV   PATH="${SIMDET_BIN}:${PATH}"
 ENV   IOC_PREFIX="6iddSIM1:"
 ENV   IOCNAME="default"
@@ -17,7 +17,7 @@ RUN apt update  -y && apt upgrade -y && \
     && rm -rf /var/lib/apt/lists/*
 
 # make the sim motor binary
-WORKDIR /opt/epics-base/synApps/support/xxx-R6-1/iocBoot/iocxxx/
+WORKDIR /opt/synApps/support/xxx-R6-1/iocBoot/iocxxx/
 RUN     sed -i s/xxx:/'$(IOC_PREFIX)'/g common.iocsh
 RUN     cp examples/motors.iocsh ./
 RUN     cp examples/std.iocsh    ./
@@ -30,13 +30,13 @@ RUN     sed -i sz'IOC=xxx'z'IOC=$(IOCNAME)'zg st.cmd.Linux
 RUN     sed -i sz'< common.iocsh'z'< common.iocsh\n< std.iocsh\n< motors.iocsh'zg st.cmd.Linux
 
 # build the sim scalers and motors
-WORKDIR /opt/epics-base/synApps/support/xxx-R6-1
+WORKDIR /opt/synApps/support/xxx-R6-1
 RUN     make rebuild
 
-WORKDIR /opt/epics-base/synApps/support/xxx-R6-1/iocBoot/iocxxx/softioc
+WORKDIR /opt/synApps/support/xxx-R6-1/iocBoot/iocxxx/softioc
 ENTRYPOINT [ "./run"]
 
 # --- DEV ---
 # docker build -t kedokudo/virtualbeamline:ioc6iddsimmtr .    
-# docker run -it --rm -e IOC_PREFIX='test1:' -e IOCNAME='test1'  --net=virtualbeam kedokudo/virtualbeamline:ioc6iddsimmtr /bin/bash                                                                     
+# docker run -it --rm -e IOC_PREFIX='test1:' -e IOCNAME='test1' kedokudo/virtualbeamline:ioc6iddsimmtr /bin/bash                                                                     
 #./xxx.sh start
