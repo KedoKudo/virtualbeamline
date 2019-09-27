@@ -29,7 +29,8 @@ WORKDIR ${EPICS_ROOT}
 #RUN pwd
 #RUN ls -lAFg
 RUN make -j4 CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+RUN make clean
 
-# 
-# build: docker build -t epics-base-7.0.3 ./ 2>&1 | tee build-log.txt
-# run: docker run -it --rm --net=virtualbeam epics-base-7.0.3 /bin/bash
+# --- Dev ---
+# docker build -t kedokudo/virtualbeamline:epics-base .
+# docker run -it --rm kedokudo/virtualbeamline:epics-base /bin/bash
