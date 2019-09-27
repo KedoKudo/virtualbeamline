@@ -6,12 +6,12 @@ USER  root
 ENV   EPICS="/opt/epics-base"
 ENV   EPICS_BASE="/opt/epics-base"
 ENV   EPICSEXTENSIONS="${EPICS_BASE}/extensions"
-ENV   SIMDET_BIN="${EPICS}/synApps/support/areaDetector-R3-7/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64"
+ENV   SIMDET_BIN="/opt/synApps/support/areaDetector-R3-7/ADSimDetector/iocs/simDetectorIOC/bin/linux-x86_64"
 ENV   PATH="${SIMDET_BIN}:${PATH}"
 ENV   CAQTDMVER="V4.2.4"
 
 RUN apt update  -y && apt upgrade -y && \
-    apt install -y  qt5-default \
+    apt install -y  qt5-default qttools5-dev-tools \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
@@ -20,7 +20,7 @@ RUN    tar xvf ${CAQTDMVER}.tar.gz \
     && rm ${CAQTDMVER}.tar.gz \
     && ln -s caqtdm-4.2.4 caqtdm
 WORKDIR /opt/caqtdm
-RUN     ["./caQtDM_BuildAll"]
+# RUN     ["./caQtDM_BuildAll"]
 
 # --- DEV --- 
 # docker build -t kedokudo/virtualbeamline:caQTDM .
