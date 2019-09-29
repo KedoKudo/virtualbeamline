@@ -12,7 +12,8 @@ RUN apt-get  update  -y   && \
         apt-utils            \
         build-essential      \
         libreadline-dev      \
-        wget              && \
+        wget                 \
+        &&                   \
     rm -rf /var/lib/apt/lists/*
 
 
