@@ -54,6 +54,20 @@ services:
       - caRepeat
       - ioc6iddsimdet
       - ioc6iddsimmtr
+
+  caQTDM:
+    container_name: caQTDM
+    image: kedokudo/virtualbeamline:caQTDM
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - /bin/bash
+    networks:
+      - vbnet6idd
+    depends_on:
+      - caRepeat
+      - ioc6iddsimdet
+      - ioc6iddsimmtr
   
   mongo:
     container_name: mongoDB
