@@ -32,3 +32,14 @@ CMD ["bash", "-c", "/opt/fiji/Fiji.app/ImageJ-linux64" ]
 
 # 164.54.62.190 is the local IP assigned to your mac, for linux OS :0 is sufficient
 # docker run -it --net=host -e DISPLAY=164.54.62.190:0 -v "/Users/chenzhang/tmp:/data" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" kedokudo/virtualbeamline:fiji /bin/bash
+
+# script
+# plugin -> scritping -> script interpreter 
+# 
+# import net.imglib2.img.display.imagej.*;
+# import org.janelia.saalfeldlab.n5.*;
+# import org.janelia.saalfeldlab.n5.hdf5.*;
+# import org.janelia.saalfeldlab.n5.imglib2.*;
+# n5 = new N5HDF5Reader("/data/tomoproc_test/ss304.h5");
+# img = N5Utils.open(n5, "/exchange/data");
+# ImageJFunctions.show(img);
