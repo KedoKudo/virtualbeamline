@@ -45,7 +45,6 @@ ENV CAQTDM_DIR="/opt/caqtdm-4.2.4/"
 ENV PATH="${CAQTDM_DIR}/caQtDM_Binaries:${PATH}"
 ENV CAQTDM_DISPLAY_PATH="${AREA_DETECTOR}/ADSimDetector/iocs/simDetectorIOC/iocBoot/iocSimDetector"
 ENV CAQTDM_OPTIMIZE_EPICS3CONNECTIONS="TRUE"
-# ENV QT_PLUGIN_PATH="/usr/local/epics/extensions/lib/linux-x86_64"
 
 
 # --- DEV --- 
