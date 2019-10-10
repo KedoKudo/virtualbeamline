@@ -6,7 +6,7 @@ services:
     container_name: caRepeater
     image: kedokudo/virtualbeamline:epics-base
     networks:
-      - vbnet6idd
+      - host
     entrypoint:
       - bin/linux-x86_64/caRepeater
   
@@ -16,7 +16,7 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - vbnet6idd
+      - host
     environment:
       - IOC_PREFIX='6iddSIM:'
       - IOCNAME='6iddSIM'
@@ -32,7 +32,7 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - vbnet6idd
+      - host
     environment:
       - IOC_PREFIX='6iddSIMDET1:'
     expose:
@@ -49,25 +49,28 @@ services:
     entrypoint:
       - /bin/bash
     networks:
-      - vbnet6idd
+      - host
     depends_on:
       - caRepeat
       - ioc6iddsimdet
       - ioc6iddsimmtr
-
-  caQTDM:
-    container_name: caQTDM
+  
+  detUI:
+    container_name: detectorUI
     image: kedokudo/virtualbeamline:caQTDM
     stdin_open: true
     tty: true
     entrypoint:
       - /bin/bash
     networks:
-      - vbnet6idd
+      - host
+    environment:
+      - DISPLAY="130.202.62.166:0"
+    volumes:
+      - "$HOME/.Xauthority:/root/.Xauthority:rw"
     depends_on:
       - caRepeat
       - ioc6iddsimdet
-      - ioc6iddsimmtr
   
   mongo:
     container_name: mongoDB
@@ -80,6 +83,10 @@ services:
     image: kedokudo/virtualbeamline:jupyter
     stdin_open: true
     tty: true
+    networks:
+      - host
+    ports:
+      - "8899:8888"
     entrypoint:
       - "jupyter"
       - "lab"
@@ -88,5 +95,4 @@ services:
       - "--allow-root"
 
 networks:
-  vbnet6idd:
-    driver: bridge
+  host:
