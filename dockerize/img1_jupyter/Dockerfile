@@ -60,8 +60,20 @@ RUN pip install apstools
 
 # entry point
 WORKDIR    /home
-ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
+
+# Add Tini. Tini operates as a process subreaper for jupyter. This prevents
+# kernel crashes.
+ENV TINI_VERSION v0.6.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+# NOTE:
+# NotebookApp.token='' disables token checking, just to make things easier when
+# testing
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
 
 # --- DEV ---
 # docker build -t kedokudo/virtualbeamline:jupyter .
-# docker run -it --rm  kedokudo/virtualbeamline:jupyter /bin/bash
+# docker run --rm -p 8899:8888 kedokudo/virtualbeamline:jupyter
+# docker run -it --rm -p 8899:8888 kedokudo/virtualbeamline:jupyter /bin/bash

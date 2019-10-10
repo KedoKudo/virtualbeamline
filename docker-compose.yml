@@ -60,6 +60,7 @@ services:
     image: kedokudo/virtualbeamline:caQTDM
     stdin_open: true
     tty: true
+    restart: on-failure
     entrypoint:
       - /bin/bash
     networks:
@@ -93,6 +94,10 @@ services:
       - "--ip=0.0.0.0"
       - "--no-browser"
       - "--allow-root"
+      - "--NotebookApp.token=''"
+    volumes:
+      - ~/Documents/Workbench/jupyter-ht-hedm:/home/jupyter-ht-hedm  
 
 networks:
   host:
+
