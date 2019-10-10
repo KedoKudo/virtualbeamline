@@ -32,9 +32,13 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
 RUN conda update --all --quiet --yes
 
 RUN conda install --quiet --yes \
-    'nodejs' \
     'jupyter' 'jupyterlab' \
-    'numpy' 'scipy' 'matplotlib' \
+    'pathlib' \
+    'matplotlib' \
+    'nodejs' \
+    'numpy' \
+    'scipy' \
+    'tabulate' \
     && \
     conda clean --all --yes && \
     # Activate ipywidgets extension in the environment that runs the notebook server
@@ -77,3 +81,8 @@ CMD ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--Notebo
 # docker build -t kedokudo/virtualbeamline:jupyter .
 # docker run --rm -p 8899:8888 kedokudo/virtualbeamline:jupyter
 # docker run -it --rm -p 8899:8888 kedokudo/virtualbeamline:jupyter /bin/bash
+
+# --- NOTE ---
+# open browser and go to
+# localhost:8899
+# to start using Jupyter Lab
