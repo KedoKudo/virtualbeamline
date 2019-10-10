@@ -84,5 +84,5 @@ CMD ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser", "--allow-root", "--Notebo
 
 # --- NOTE ---
 # open browser and go to
-# localhost:8899
+#     localhost:8899
 # to start using Jupyter Lab
