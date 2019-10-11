@@ -40,11 +40,38 @@ RUN    tar xvf ${CAQTDMVER}.tar.gz \
 WORKDIR /opt/caqtdm
 RUN     ["./caQtDM_BuildAll"]
 
+
+# --- adjust ui files for motors ---
+WORKDIR ${SUPPORT}/xxx-R6-1
+RUN sed -i s:/APSshare/bin/caQtDM:caQtDM:g start_caQtDM_xxx      && \
+    sed -i s/xxx:/${PREFIX}/g              xxxApp/op/adl/xxx.adl && \
+    sed -i s/ioc=xxx/ioc=${PREFIX}/g       xxxApp/op/adl/xxx.adl && \
+    sed -i s/XXX/`echo ${PREFIX}`/g        xxxApp/op/ui/xxx.ui   && \
+    sed -i s/xxx:/${PREFIX}/g              xxxApp/op/ui/xxx.ui   && \
+    sed -i s/ioc=xxx/ioc=${PREFIX}/g       xxxApp/op/ui/xxx.ui
+
+# Grab all the ui files for all devices and put them in a centralized location
+ADD https://raw.githubusercontent.com/prjemian/epics-docker/master/n3_synApps/copy_screens.sh ${SUPPORT}/
+RUN bash ${SUPPORT}/copy_screens.sh ${SUPPORT} ${SUPPORT}/screens
+
 # post-build config
 ENV CAQTDM_DIR="/opt/caqtdm-4.2.4/"
 ENV PATH="${CAQTDM_DIR}/caQtDM_Binaries:${PATH}"
-ENV CAQTDM_DISPLAY_PATH="${AREA_DETECTOR}/ADSimDetector/iocs/simDetectorIOC/iocBoot/iocSimDetector"
+ENV CAQTDM_DISPLAY_PATH="${SUPPORT}/screens/ui"
 ENV CAQTDM_OPTIMIZE_EPICS3CONNECTIONS="TRUE"
+
+# setup quick start GUI functions
+ENV AD_PREFIX="6iddSIM1:"
+ENV PREFIX="6iddSIM1:"
+RUN echo '#! /bin/sh' >> /bin/startSimMotorGUI && \ 
+    echo 'caQtDM -macro "P=${PREFIX}" ${CAQTDM_DISPLAY_PATH}/xxx.ui' >> /bin/startSimMotorGUI && \
+    chmod +x /bin/startSimMotorGUI
+RUN echo '#! /bin/sh' >> /bin/startSimADGUI && \ 
+    echo 'caQtDM -macro "P=${PREFIX},R=cam1:" ${CAQTDM_DISPLAY_PATH}/simDetector.ui' >> /bin/startSimADGUI && \
+    chmod +x /bin/startSimADGUI
+
+# point to ui camp
+WORKDIR ${CAQTDM_DISPLAY_PATH}
 
 
 # --- DEV --- 
@@ -52,10 +79,21 @@ ENV CAQTDM_OPTIMIZE_EPICS3CONNECTIONS="TRUE"
 # docker run -it --rm  kedokudo/virtualbeamline:caQTDM /bin/bash
 
 # --- GET GUI ---
-# ifconfig en0
+# for dev only
+# ifconfig en0 to get the local IP (mac required)
 # 130.202.62.166 is the local IP assigned to your mac, for linux OS :0 is sufficient
-# docker run -it --net=host -e DISPLAY=130.202.62.166:0 --volume="$HOME/.Xauthority:/root/.Xauthority:rw" kedokudo/virtualbeamline:caQTDM /bin/bash
+# docker run -it --net=host -e DISPLAY=130.202.62.165:0 --volume="$HOME/.Xauthority:/root/.Xauthority:rw" kedokudo/virtualbeamline:caQTDM /bin/bash
 
 # --- Area Detector Control UI file lcoation
 # /opt/synApps/support/areaDetector-R3-7/ADSimDetector/simDetectorApp/op/ui/autoconvert
 # running:  caQtDM -macro "P=6iddSim:,R=cam1:" simDetector.ui
+
+# motor https://github.com/prjemian/epics-docker/blob/master/n3_synApps/start_xxx.sh
+# xxx.ui 
+
+# edit st_base.cmd
+# EOF 
+# dbpf("xxx:m1.HLM", 5)  database put field
+# dbpf("xxx:m1.LLM", 0)
+
+# dbpr                   database print field
