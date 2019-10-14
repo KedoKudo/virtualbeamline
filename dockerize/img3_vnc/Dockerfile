@@ -17,7 +17,13 @@ RUN mkdir ~/.vnc
 RUN echo "123456" | vncpasswd -f >> ~/.vnc/passwd
 RUN chmod 600 ~/.vnc/passwd
 
-CMD ["/usr/bin/vncserver", "-geometry", "2560x1600", "-fg"]
+ENV TINI_VERSION v0.6.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+ENV RESOLUTION "2560x1600"
+CMD ["/usr/bin/vncserver", "-geometry", ${RESOLUTION}, "-fg"]
 
 # --- DEV ---
 # docker build -t kedokudo/virtualbeamline:vnc .

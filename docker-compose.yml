@@ -4,22 +4,23 @@ version: '3.7'
 services:
   caRepeat:
     container_name: caRepeater
+    restart: always
     image: kedokudo/virtualbeamline:epics-base
     networks:
-      - host
+      - vn6idd
     entrypoint:
       - bin/linux-x86_64/caRepeater
   
   ioc6iddsimmtr:
     container_name: ioc6iddsimmtr
+    restart: always
     image: kedokudo/virtualbeamline:ioc6iddsimmtr
     stdin_open: true
     tty: true
     networks:
-      - host
+      - vn6idd
     environment:
-      - IOC_PREFIX='6iddSIM:'
-      - IOCNAME='6iddSIM'
+      - 'PREFIX=6iddSIM:'
     expose:
       - "5064" 
       - "5065"
@@ -28,13 +29,14 @@ services:
   
   ioc6iddsimdet:
     container_name: ioc6iddsimdet
+    restart: always
     image: kedokudo/virtualbeamline:ioc6iddsimdet
     stdin_open: true
     tty: true
     networks:
-      - host
+      - vn6idd
     environment:
-      - IOC_PREFIX='6iddSIMDET1:'
+      - 'AD_PREFIX=6iddSIMDET1:'
     expose:
       - "5064" 
       - "5065"
@@ -49,33 +51,36 @@ services:
     entrypoint:
       - /bin/bash
     networks:
-      - host
+      - vn6idd
     depends_on:
       - caRepeat
       - ioc6iddsimdet
       - ioc6iddsimmtr
   
-  detUI:
-    container_name: detectorUI
-    image: kedokudo/virtualbeamline:caQTDM
+  vnc:
+    container_name: vnc
+    image: kedokudo/virtualbeamline:vnc
     stdin_open: true
     tty: true
-    restart: on-failure
-    entrypoint:
-      - /bin/bash
-    networks:
-      - host
     environment:
-      - DISPLAY="130.202.62.166:0"
-    volumes:
-      - "$HOME/.Xauthority:/root/.Xauthority:rw"
+      - 'PREFIX=6iddSIM:'
+      - 'AD_PREFIX=6iddSIMDET1:'
+      - 'RESOLUTION=1920x1200'
+    networks:
+      - vn6idd
+    ports:
+      - "5901:5901"
     depends_on:
       - caRepeat
       - ioc6iddsimdet
+      - ioc6iddsimmtr
   
   mongo:
     container_name: mongoDB
+    restart: always
     image: mongo
+    networks: 
+      - vn6idd
     ports:
       - "27017:27017"
 
@@ -85,7 +90,7 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - host
+      - vn6idd
     ports:
       - "8899:8888"
     entrypoint:
@@ -95,9 +100,14 @@ services:
       - "--no-browser"
       - "--allow-root"
       - "--NotebookApp.token=''"
+    depends_on:
+      - caRepeat
+      - ioc6iddsimdet
+      - ioc6iddsimmtr
     volumes:
       - ~/Documents/Workbench/jupyter-ht-hedm:/home/jupyter-ht-hedm  
 
 networks:
-  host:
+  vn6idd:
+    driver: bridge
 

@@ -61,13 +61,13 @@ ENV CAQTDM_DISPLAY_PATH="${SUPPORT}/screens/ui"
 ENV CAQTDM_OPTIMIZE_EPICS3CONNECTIONS="TRUE"
 
 # setup quick start GUI functions
-ENV AD_PREFIX="6iddSIM1:"
+ENV AD_PREFIX="6iddSIMDET1:"
 ENV PREFIX="6iddSIM1:"
 RUN echo '#! /bin/sh' >> /bin/startSimMotorGUI && \ 
     echo 'caQtDM -macro "P=${PREFIX}" ${CAQTDM_DISPLAY_PATH}/xxx.ui' >> /bin/startSimMotorGUI && \
     chmod +x /bin/startSimMotorGUI
 RUN echo '#! /bin/sh' >> /bin/startSimADGUI && \ 
-    echo 'caQtDM -macro "P=${PREFIX},R=cam1:" ${CAQTDM_DISPLAY_PATH}/simDetector.ui' >> /bin/startSimADGUI && \
+    echo 'caQtDM -macro "P=${AD_PREFIX},R=cam1:" ${CAQTDM_DISPLAY_PATH}/simDetector.ui' >> /bin/startSimADGUI && \
     chmod +x /bin/startSimADGUI
 
 # point to ui camp
