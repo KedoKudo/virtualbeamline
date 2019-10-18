@@ -2,7 +2,7 @@ FROM kedokudo/virtualbeamline:caQTDM
 
 LABEL version="0.0.1" \
       maintainer="kedokudo <chenzhang8722@gmail.com>" \
-      lastupdate="2019-10-09"
+      lastupdate="2019-10-18"
 USER  root
 EXPOSE 5901
 
@@ -17,13 +17,12 @@ RUN mkdir ~/.vnc
 RUN echo "123456" | vncpasswd -f >> ~/.vnc/passwd
 RUN chmod 600 ~/.vnc/passwd
 
-ENV TINI_VERSION v0.6.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
-RUN chmod +x /usr/bin/tini
-ENTRYPOINT ["/usr/bin/tini", "--"]
+ENV TINI_VERSION v0.18.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
+RUN chmod +x /bin/tini
+ENTRYPOINT ["/bin/tini", "--"]
 
-ENV RESOLUTION "2560x1600"
-CMD ["/usr/bin/vncserver", "-geometry", ${RESOLUTION}, "-fg"]
+CMD ["/usr/bin/vncserver","-geometry", "1920x1200", "-fg"]
 
 # --- DEV ---
 # docker build -t kedokudo/virtualbeamline:vnc .
