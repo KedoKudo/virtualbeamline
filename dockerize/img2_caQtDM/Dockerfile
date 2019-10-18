@@ -72,9 +72,9 @@ RUN echo '#! /bin/sh' >> /bin/startSimADGUI && \
 
 # point to ui camp
 WORKDIR ${CAQTDM_DISPLAY_PATH}
+ADD https://raw.githubusercontent.com/prjemian/epics-docker/master/caQtDM/motor_adsim.ui .
 
-
-# --- DEV --- 
+# --- DEV ---
 # docker build -t kedokudo/virtualbeamline:caQTDM .
 # docker run -it --rm  kedokudo/virtualbeamline:caQTDM /bin/bash
 
@@ -82,7 +82,7 @@ WORKDIR ${CAQTDM_DISPLAY_PATH}
 # for dev only
 # ifconfig en0 to get the local IP (mac required)
 # 130.202.62.166 is the local IP assigned to your mac, for linux OS :0 is sufficient
-# docker run -it --net=host -e DISPLAY=130.202.62.165:0 --volume="$HOME/.Xauthority:/root/.Xauthority:rw" kedokudo/virtualbeamline:caQTDM /bin/bash
+# docker run -it --net=host -e DISPLAY=164.54.62.74:0 --volume="$HOME/.Xauthority:/root/.Xauthority:rw" kedokudo/virtualbeamline:caQTDM /bin/bash
 
 # --- Area Detector Control UI file lcoation
 # /opt/synApps/support/areaDetector-R3-7/ADSimDetector/simDetectorApp/op/ui/autoconvert
