@@ -66,7 +66,7 @@ ENV PREFIX="6iddSIM1:"
 RUN echo '#! /bin/sh' >> /bin/startGUI && \ 
     echo 'caQtDM -macro "P=${PREFIX}"                      ${CAQTDM_DISPLAY_PATH}/xxx.ui &'         >> /bin/startGUI && \
     echo 'caQtDM -macro "P=${AD_PREFIX},R=cam1:"           ${CAQTDM_DISPLAY_PATH}/simDetector.ui &' >> /bin/startGUI && \
-    echo 'caQtDM -macro "MOTOR=${PREFIX},AD=${AD_PREFIX}:" ${CAQTDM_DISPLAY_PATH}/motor_adsim.ui &' >> /bin/startGUI && \
+    echo 'caQtDM -macro "MOTOR=${PREFIX},AD=${AD_PREFIX}"  ${CAQTDM_DISPLAY_PATH}/motor_adsim.ui &' >> /bin/startGUI && \
     chmod +x /bin/startGUI
 
 # point to ui camp

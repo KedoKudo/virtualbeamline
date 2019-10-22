@@ -22,7 +22,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/
 RUN chmod +x /bin/tini
 ENTRYPOINT ["/bin/tini", "--"]
 
-CMD ["/usr/bin/vncserver","-geometry", "1920x1200", "-fg"]
+CMD ["/usr/bin/vncserver","-geometry", "2880x1800", "-fg"]
 
 # --- DEV ---
 # docker build -t kedokudo/virtualbeamline:vnc .

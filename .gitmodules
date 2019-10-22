@@ -1,0 +1,28 @@
+[submodule "epics-base"]
+	path = epics-base
+	url = https://github.com/KedoKudo/epics-base.git
+	branch = master
+[submodule "synapps"]
+	path = synapps
+	url = https://github.com/KedoKudo/synapps.git
+	branch = master
+[submodule "ioc6iddsimdet"]
+	path = ioc6iddsimdet
+	url = https://github.com/KedoKudo/ioc6iddsimdet.git
+	branch = master
+[submodule "ioc6iddsimmtr"]
+	path = ioc6iddsimmtr
+	url = https://github.com/KedoKudo/ioc6iddsimmtr.git
+	branch = master
+[submodule "caqtdm"]
+	path = caqtdm
+	url = https://github.com/KedoKudo/caqtdm.git
+	branch = master
+[submodule "vnc"]
+	path = vnc
+	url = https://github.com/KedoKudo/vnc.git
+	branch = master
+[submodule "jupyter"]
+	path = jupyter
+	url = https://github.com/KedoKudo/jupyter.git
+	branch = master

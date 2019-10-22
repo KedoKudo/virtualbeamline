@@ -74,6 +74,9 @@ services:
       - caRepeat
       - ioc6iddsimdet
       - ioc6iddsimmtr
+    volumes:
+      - .:/data
+    
   
   mongo:
     container_name: mongoDB
@@ -110,4 +113,3 @@ services:
 networks:
   vn6idd:
     driver: bridge
-
